@@ -1,10 +1,15 @@
 <div class="container">
+	<div class="lightmap-overlay"></div>
+
 	<div class="game-controller">
 		<button type="button" (click)="resetGame()">RESET</button>
 	</div>
 	<div class="game">
 		<div class="outer_circle">
 			<div class="inner_circle">
+				<div class="circle-lightoverlay">
+
+				</div>
 				<div
 				class="circle"
 				[style.--turn-degree]="totalTurnDegree + 'deg'"
@@ -30,15 +35,17 @@
 		</div>
 
 		<div class="circle-controller">
-			<button type="button" [disabled]="singleTurnDegree !== 0" (click)="turnCCW()">Left</button>
-			<button type="button" [disabled]="singleTurnDegree !== 0" (click)="turnCW()">Right</button>
+			<button type="button" [disabled]="!!globalControlsDisabled || singleTurnDegree !== 0" (click)="turnCCW()">Left</button>
+			<button type="button" [disabled]="!!globalControlsDisabled || singleTurnDegree !== 0" (click)="turnCW()">Right</button>
 		</div>
 	</div>
 </div>
 
 <ng-template #position let-posNum let-content="content">
 	<button
+	[disabled]="!!globalControlsDisabled"
 	[class.isSelected]="firstPosToSwitch === posNum"
+	[class.isPossible]="posNum === firstPossibleSwitch || posNum === secondPossibleSwitch"
 	class="position position-{{posNum}}"
 	[class.isTurning]="singleTurnDegree !== 0"
 	[style.--pos-turn-degree]="(-1 * singleTurnDegree) + 'deg'"
