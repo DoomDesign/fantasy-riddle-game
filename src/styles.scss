@@ -1,1 +1,207 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~modern-normalize/modern-normalize.css';
+
+@mixin center-contents {
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr;
+	place-items: center;
+}
+
+.container {
+	width: 100vw;
+	height: 100vh;
+	padding: 2rem;
+
+	position: relative;
+
+	@include center-contents();
+
+	.game-controller {
+		position: fixed;
+		top: 0;
+		left: 0;
+	}
+}
+
+.game {
+	aspect-ratio: 1;
+	height: 100%;
+	background-color: black;
+
+	position: relative;
+
+	@include center-contents();
+}
+
+.outer_circle {
+	background-color: darkgray;
+	width: 100%;
+	height: 100%;
+
+	position: relative;
+
+	@include center-contents();
+
+	> .position {
+
+		--translate-x: 0;
+		--translate-y: 0;
+
+		transform: translateX(var(--translate-x)) translateY(var(--translate-y));
+
+		&-1 {
+			top: 0;
+			left: 50%;
+			--translate-x: -50%;
+		}
+		&-3 {
+			top: 50%;
+			right: 0;
+			--translate-y: -50%;
+		}
+		&-5 {
+			bottom: 0;
+			left: 50%;
+			--translate-x: -50%;
+		}
+		&-7 {
+			top: 50%;
+			left: 0;
+			--translate-y: -50%;
+		}
+	}
+}
+
+.inner_circle {
+	width: 70%;
+	height: 70%;
+
+	position: relative;
+
+	@include center-contents();
+
+	.circle,
+	.positions-circle {
+		position: absolute;
+		top: 0;
+		left: 0;
+
+		width: 100%;
+		height: 100%;
+
+
+		transform: rotate(var(--turn-degree));
+
+	}
+
+	.circle {
+		transition: all var(--turn-speed-seconds);
+		border-radius: 100vmax;
+
+		border: 3px dotted black;
+		// background: linear-gradient(to bottom, red, black);
+
+		// background: url(https://source.unsplash.com/random) center center;
+		// background-size: cover;
+	}
+
+	.positions-circle {
+		z-index: 100;
+
+		&.isTurning {
+			transition: all var(--turn-speed-seconds);
+		}
+	}
+
+	.position {
+		// transition: all var(--pos-turn-speed-seconds);
+		transform: rotate(var(--pos-turn-degree));
+
+		&.isTurning {
+			transition: all var(--turn-speed-seconds);
+		}
+
+		&-8 {
+			top: 7.5%;
+			left: 7.5%;
+		}
+		&-2 {
+			top: 7.5%;
+			right: 7.5%;
+		}
+		&-4 {
+			bottom: 7.5%;
+			right: 7.5%;
+		}
+		&-6 {
+			bottom: 7.5%;
+			left: 7.5%;
+		}
+	}
+}
+
+.position {
+	cursor: pointer;
+	position: absolute;
+	background-color: blue;
+
+	border: 0;
+
+	width: 5vw;
+	aspect-ratio: 1;
+	border-radius: 100vmax;
+
+	@include center-contents();
+
+	overflow: hidden;
+	// font-size: 2vw;
+	color: #fff;
+
+	text-align: center;
+	line-height: 1;
+
+	transition: background-color .5s, box-shadow .5s;
+
+	&:hover,
+	&.isSelected {
+		background-color: darkblue;
+		box-shadow:
+		inset 0px 0px 1px 1px white,
+		inset 0px 0px 20px aqua,
+								0px 0px 1px 1px white,
+								0px 0px 20px aqua,
+								0px 0px 50px darkblue
+								;
+	}
+
+	span {
+		font-size: 1rem;
+	}
+
+	span.debug {
+		font-size: 1vw;
+		position: absolute;
+		opacity: .5;
+		background-color: white;
+		border-radius: 100vmax;
+		overflow: hidden;
+		width: 1.5vw;
+		height: 1.5vw;
+		display: grid;
+		place-content: center;
+		top: 0;
+		left: 50%;
+		color: black;
+		transform: translateX(-50%);
+
+		// display: none;
+	}
+}
+
+.circle-controller {
+	position: absolute;
+
+	z-index: 1000;
+
+}
