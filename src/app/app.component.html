@@ -35,8 +35,10 @@
 		</div>
 
 		<div class="circle-controller">
-			<button type="button" [disabled]="!!globalControlsDisabled || singleTurnDegree !== 0" (click)="turnCCW()">Left</button>
-			<button type="button" [disabled]="!!globalControlsDisabled || singleTurnDegree !== 0" (click)="turnCW()">Right</button>
+			<div class="buttons">
+				<button type="button" class="button-turn_ccw" [disabled]="!!globalControlsDisabled || singleTurnDegree !== 0" (click)="turnCCW()"></button>
+				<button type="button" class="button-turn_cw" [disabled]="!!globalControlsDisabled || singleTurnDegree !== 0" (click)="turnCW()"></button>
+			</div>
 		</div>
 	</div>
 </div>

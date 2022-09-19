@@ -185,7 +185,7 @@
 .position {
 	cursor: pointer;
 	position: absolute;
-	// background-color: blue;
+
 	background: url(assets/img/position-circle-bg.png) center center no-repeat;
 	background-size: 100%;
 
@@ -197,44 +197,78 @@
 
 	@include center-contents();
 
-	overflow: hidden;
-	// font-size: 2vw;
+	overflow: visible;
+
 	color: #fff;
 
 	text-align: center;
 	line-height: 1;
 
-	transition: background-color .5s, box-shadow .5s;
+
+
+	&::after {
+		display: block;
+		pointer-events: none;
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 80%;
+		height: 80%;
+		border-radius: 100vmax;
+
+		opacity: 0;
+
+		transition: opacity .5s, background-color .5s, box-shadow .5s;
+		transform: translateX(-50%) translateY(-50%);
+
+		box-shadow:
+			inset 0px 0px 0px 0px transparent,
+			inset 0px 0px 0px 0px transparent,
+			0px 0px 0px 0px transparent,
+			0px 0px 0px 0px transparent,
+			0px 0px 0px 0px transparent
+		;
+	}
 
 	&:hover,
 	&.isSelected {
-		&:not(.error) {
-			box-shadow:
-						inset 0px 0px 1px 1px white,
-						inset 0px 0px 20px aqua,
-						0px 0px 1px 1px white,
-						0px 0px 20px aqua,
-						0px 0px 50px darkblue
-						;
+		&:not(.error, .success, :disabled, [disabled]) {
+			&::after {
+				opacity: 1;
+				animation: highlightedAni 5s infinite;
+				animation-timing-function: linear;
+			}
 		}
 	}
 
 	&.error {
-		transition: background-color .25s, box-shadow .25s;
-		box-shadow:
-					inset 0px 0px 1px 1px orange,
-					inset 0px 0px 20px red,
-					0px 0px 1px 1px orange,
-					0px 0px 20px red,
-					0px 0px 50px darkred
-					;
+		&::after {
+			opacity: 1;
+			box-shadow:
+						inset 0px 0px 1px 2px orange,
+						inset 0px 0px 20px red,
+						0px 0px 1px 2px orange,
+						0px 0px 20px red,
+						0px 0px 50px darkred
+						;
+		}
+	}
+
+	&.success {
+		&::after {
+			opacity: 1;
+			animation: successAni 1s linear;
+		}
 	}
 
 	&.isPossible {
 		&:not(:hover) {
-			animation: markPossible 5s infinite;
-			animation-timing-function: linear;
-
+			&::after {
+				opacity: 1;
+				animation: markPossible 5s infinite;
+				animation-timing-function: linear;
+			}
 		}
 
 	}
@@ -264,30 +298,145 @@
 }
 
 .circle-controller {
+	$scale: calc(2/3);
 	position: absolute;
+
+	width: 377px * $scale;
+	height: 377px * $scale;
+
+	background: url(assets/img/rotation-buttons-bg.png) center center no-repeat;
+	background-size: contain;
 
 	z-index: 1000;
 
+	@include center-contents();
+
+	.buttons {
+		display: flex;
+		gap: 14px * $scale;
+		flex-wrap: nowrap;
+
+		> button {
+			appearance: none;
+			-webkit-appearance: none;
+
+			padding: 0;
+			margin: 0;
+
+			border: 0;
+			width: 155px * $scale;
+			height: 311px * $scale;
+
+			position: relative;
+
+			cursor: pointer;
+
+
+
+			&::after {
+				content: '';
+				display: block;
+				pointer-events: none;
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+
+				opacity: 0;
+				transition: opacity .25s;
+			}
+
+			&:hover:not(:disabled, [disabled]) {
+				&::after {
+					opacity: 1;
+				}
+			}
+
+			&.button-turn_ccw {
+				background: url(assets/img/arrow_ccw.png) center center no-repeat;
+				background-size: contain;
+
+				&::after {
+					background: url(assets/img/arrow_ccw_hover.png) center center no-repeat;
+					background-size: contain;
+				}
+			}
+			&.button-turn_cw {
+				background: url(assets/img/arrow_cw.png) center center no-repeat;
+				background-size: contain;
+
+				&::after {
+					background: url(assets/img/arrow_cw_hover.png) center center no-repeat;
+					background-size: contain;
+				}
+			}
+		}
+
+	}
+
+
+}
+
+@keyframes highlightedAni {
+
+	0%, 100% {
+		box-shadow:
+					inset 0px 0px 1px 2px rgba(aqua, .5),
+					inset 0px 0px 20px rgba(blue, .5),
+					0px 0px 1px 2px rgba(aqua, .5),
+					0px 0px 20px rgba(blue, .5),
+					0px 0px 50px rgba(darkblue, .5)
+					;
+	}
+	50% {
+		box-shadow:
+					inset 0px 0px 1px 2px rgba(white, 1),
+					inset 0px 0px 20px rgba(aqua, 1),
+					0px 0px 1px 2px rgba(white, 1),
+					0px 0px 20px rgba(aqua, 1),
+					0px 0px 50px rgba(darkblue, 1)
+					;
+	}
 }
 
 @keyframes markPossible {
 
 	0%, 100% {
 		box-shadow:
-		inset 0px 0px 5px 1px rgba(dodgerblue, 0),
-		inset 0px 0px 30px rgba(darkblue, 0),
-		0px 0px 10px 0px rgba(dodgerblue, 0),
-		0px 0px 40px rgba(darkblue, 0),
+		inset 0px 0px 5px 2px rgba(dodgerblue, .3),
+		inset 0px 0px 30px rgba(darkblue, .3),
+		0px 0px 10px 2px rgba(dodgerblue, .3),
+		0px 0px 40px rgba(darkblue, .3),
 					// 0px 0px 50px 30px transparent
 					;
 	}
 	50% {
 		box-shadow:
-					inset 0px 0px 5px 1px rgba(dodgerblue, .6),
-					inset 0px 0px 30px rgba(darkblue, .6),
-					0px 0px 10px 0px rgba(dodgerblue, .6),
-					0px 0px 40px rgba(darkblue, .6),
+					inset 0px 0px 5px 2px rgba(dodgerblue, .7),
+					inset 0px 0px 30px rgba(darkblue, .7),
+					0px 0px 10px 2px rgba(dodgerblue, .7),
+					0px 0px 40px rgba(darkblue, .7),
 					// 0px 0px 50px darkblue
+					;
+	}
+}
+
+@keyframes successAni {
+	0% {
+		background-color: white;
+		box-shadow:
+					0px 0px 1px 2px rgba(white, 1),
+					0px 0px 20px rgba(aqua, 1),
+					0px 0px 50px rgba(darkblue, 1)
+					;
+	}
+	100% {
+		background-color: transparent;
+		box-shadow:
+					0px 0px 20px 2px rgba(white, 0),
+					0px 0px 40px rgba(aqua, 0),
+					0px 0px 100px rgba(darkblue, 0)
 					;
 	}
 }

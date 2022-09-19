@@ -147,7 +147,7 @@ export class AppComponent implements OnInit {
 		console.log("TRY TO SWITCH...:", firstPos, secondPos)
 
 		const handleDisallowed = () => {
-			this.highlightPosError([firstPos, secondPos]);
+			this.highlightPos([firstPos, secondPos], 'error', 1000);
 		}
 
 		if(!firstPos || !secondPos) {
@@ -179,18 +179,10 @@ export class AppComponent implements OnInit {
 		// only allow to switch an outerPos with it's immediate neighbors
 		switch (outerPos) {
 			case 1:
-				isAllowed = [2, 8].includes(innerPos);
+				isAllowed = [8, 2].includes(innerPos);
 				break;
-			case 3:
-				isAllowed = [2, 4].includes(innerPos);
-				break;
-				case 5:
-				isAllowed = [4, 6].includes(innerPos);
-				break;
-				case 7:
-				isAllowed = [6, 8].includes(innerPos);
-				break;
-				default:
+			default:
+				isAllowed = [outerPos-1, outerPos+1].includes(innerPos);
 				break;
 			}
 
@@ -199,6 +191,37 @@ export class AppComponent implements OnInit {
 			return;
 		}
 
+		// specific rules:
+		// hard rule: when DWARF or GOLD are direct neigbors and one of them is selected, only they can be switched
+
+
+		// soft rule
+		// 1) when GOLD is on the outer position, and ZWERG is one if its inner neighbors (or vice versa), you can only switch GOLD and ZWERG
+		if( [entityIndicator.GOLD, entityIndicator.ZWERG].includes( this.positions['outer'][outerPos] ) ) {
+			console.log("OUTERPOS IS ZWERG OR GOLD", outerPos);
+			let leftPos = outerPos - 1;
+			if(leftPos < 1) {
+				leftPos = 8;
+			}
+			let rightPos = outerPos + 1;
+			// if(rightPos > 8) {
+			// 	rightPos = 1
+			// }
+
+			console.log("CHECKING NEIGHBORS OF OUERPOS", leftPos, rightPos);
+
+			// when GOLD and ZWERG are in direct neighborhood (inner.leftPos or inner.rightPos are GOLD or ZWERG)
+			let dwarfGoldCheck = [this.positions['inner'][leftPos], this.positions['inner'][rightPos]].some(pos => [entityIndicator.GOLD, entityIndicator.ZWERG].includes(pos))
+			let innerPosCheck = [entityIndicator.ZWERG, entityIndicator.GOLD].includes( this.positions['inner'][innerPos] );
+			isAllowed = dwarfGoldCheck === innerPosCheck;
+			console.log("ZWERG/GOLD RULE", dwarfGoldCheck, innerPosCheck, "=", isAllowed);
+
+		}
+
+		if(!isAllowed) {
+			handleDisallowed();
+			return;
+		}
 
 		const oldOuterPositions = {...this.positions['outer']};
 		const oldInnerPositions = {...this.positions['inner']};
@@ -213,6 +236,8 @@ export class AppComponent implements OnInit {
 			'inner': {...newInnerPositions},
 			'outer': {...newOuterPositions}
 		};
+		this.highlightPos([firstPos, secondPos], 'success', 1000);
+		console.log("SUCCESSFULLY SWITCHED", firstPos, secondPos);
 	}
 
 	public resetGame() {
@@ -281,13 +306,11 @@ export class AppComponent implements OnInit {
 		}
 	}
 
-	public highlightPosError(positions: (number|undefined)[] = [ ]) {
+	public highlightPos(positions: (number|undefined)[] = [ ], className: string, duration: number) {
 		console.log("HIGHLIGHT POS ERROR", positions);
-		if(!Array.isArray(positions)) {
+		if(!Array.isArray(positions) || !className || !duration) {
 			return;
 		}
-
-		const errorDisplayDuration = 1000;
 
 		this.globalControlsDisabled = true;
 
@@ -298,15 +321,15 @@ export class AppComponent implements OnInit {
 
 			const posEl = document.querySelector(`.position.position-${pos}`);
 
-			posEl?.classList?.add('error');
+			posEl?.classList?.add(className);
 
 			setTimeout(() => {
-				posEl?.classList?.remove('error');
-			}, errorDisplayDuration);
+				posEl?.classList?.remove(className);
+			}, duration);
 		});
 
 		setTimeout(() => {
 			this.globalControlsDisabled = false;
-		}, errorDisplayDuration);
+		}, duration);
 	}
 }
