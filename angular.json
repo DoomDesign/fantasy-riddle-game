@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "anton-quizgame": {
+    "fantasy-riddle-game": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/anton-quizgame",
+            "outputPath": "dist/fantasy-riddle-game",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -72,10 +72,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "anton-quizgame:build:production"
+              "browserTarget": "fantasy-riddle-game:build:production"
             },
             "development": {
-              "browserTarget": "anton-quizgame:build:development"
+              "browserTarget": "fantasy-riddle-game:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +83,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "anton-quizgame:build"
+            "browserTarget": "fantasy-riddle-game:build"
           }
         },
         "test": {
@@ -107,5 +107,5 @@
       }
     }
   },
-  "defaultProject": "anton-quizgame"
+  "defaultProject": "fantasy-riddle-game"
 }
