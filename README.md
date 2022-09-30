@@ -10,6 +10,10 @@ Published on GitHub for knowledge sharing and your enjoyment.
 
 
 
+## Demo
+
+https://dev.doom-design.com/fantasy-riddle-game/
+
 ## Authors
 
 - Idea & Game Development: [Anton Clasen](https://twitter.com/ToniMarony32)
