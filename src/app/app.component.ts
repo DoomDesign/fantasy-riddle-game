@@ -21,8 +21,7 @@ type GameEntity = {
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
 	public displayDebugInfo: boolean = !!(environment?.production === false) && true;
@@ -182,7 +181,6 @@ export class AppComponent implements OnInit {
 		this.turningTimeout = setTimeout(() => {
 			clearTimeout(this.turningTimeout);
 			this.turningTimeout = undefined;
-			// this.turningDirection = 0;
 			this.singleTurnDegree = 0;
 
 			if(cb && typeof cb === 'function') {
@@ -190,49 +188,6 @@ export class AppComponent implements OnInit {
 			}
 		}, this.turnSpeedSeconds * 1000);
 	}
-
-	// turnCCW() {
-	// 	// cancel if it is turning right now
-	// 	if(this.singleTurnDegree !== 0) {
-	// 		return;
-	// 	}
-
-	// 	this.deselectPositions();
-
-	// 	console.log("turning counter-clockwise");
-	// 	this.totalTurnDegree -= 90;
-	// 	this.singleTurnDegree = -90;
-
-	// 	this.turningDirection = -1;
-
-
-	// 	this.disableAllControls(this.turnSpeedSeconds * 1000);
-
-	// 	setTimeout(() => {
-	// 		// this.turningDirection = 0;
-	// 		this.singleTurnDegree = 0;
-
-	// 		this.setNewInnerPositions('ccw');
-	// 	}, this.turnSpeedSeconds * 1000);
-	// }
-
-	// turnCW() {
-	// 	// cancel if it is turning right now
-	// 	if(this.singleTurnDegree !== 0) {
-	// 		return;
-	// 	}
-
-	// 	this.deselectPositions();
-
-
-
-	// 	setTimeout(() => {
-	// 		// this.turningDirection = 0;
-	// 		this.singleTurnDegree = 0;
-
-	// 		this.setNewInnerPositions('cw');
-	// 	}, this.turnSpeedSeconds * 1000);
-	// }
 
 	private setNewInnerPositions(dir: 'cw'|'ccw') {
 		const oldPositions = {...this.positions};
@@ -629,9 +584,6 @@ export class AppComponent implements OnInit {
 
 					setTimeout(() => {
 						this.finalFX = 2;
-						// setTimeout(() => {
-						// 	this.finalFX = 3
-						// }, 1000);
 					}, 8000);
 				}, 10 * 750);
 			})

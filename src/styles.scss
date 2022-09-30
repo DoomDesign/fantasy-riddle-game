@@ -1,10 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import '~modern-normalize/modern-normalize.css';
 
-* {
-	// outline: 1px solid rgba(red, .3);
-}
-
 @mixin center-contents {
 	display: grid;
 	grid-template-columns: 1fr;
@@ -51,7 +47,7 @@ small, .text_small {font-size: 0.8rem;}
 
 dialog {
 	position: fixed;
-	// z-index: 9999;
+
 	max-height: calc(100vh - 4rem);
 	overflow: auto;
 	background-color: #000;
@@ -220,15 +216,6 @@ dialog {
 			transform: translateX(-50%) translateY(-50%);
 		}
 
-		// .fx01 {
-		// 	background-image: url(assets/img/fx_light01.png);
-		// }
-		// .fx02 {
-		// 	background-image: url(assets/img/fx_light02.png);
-		// }
-		// .fx03 {
-		// 	background-image: url(assets/img/fx_light03.png);
-		// }
 	}
 
 }
@@ -236,7 +223,6 @@ dialog {
 .game {
 	aspect-ratio: 1;
 	height: 100%;
-	// background-color: black;
 
 	position: relative;
 
@@ -244,7 +230,6 @@ dialog {
 }
 
 .outer_circle {
-	// background-color: darkgray;
 	width: 100%;
 	height: 100%;
 
@@ -324,12 +309,6 @@ dialog {
 
 		background: url(assets/img/center-disc.png);
 		background-size: 100%;
-
-		// border: 3px dotted black;
-		// background: linear-gradient(to bottom, red, black);
-
-		// background: url(https://source.unsplash.com/random) center center;
-		// background-size: cover;
 	}
 
 	.positions-circle {
@@ -342,7 +321,6 @@ dialog {
 	}
 
 	.position {
-		// transition: all var(--pos-turn-speed-seconds);
 		transform: rotate(var(--pos-turn-degree));
 
 		&.isTurning {
@@ -482,14 +460,14 @@ dialog {
 	span.label {
 		opacity: 1;
 		transition: opacity .5s;
-		// background-color: black;
+
 		padding: .25rem;
 		font-size: 1rem;
 		position: absolute;
 		bottom: 0;
 		color: white;
 		text-shadow: 0 0 3px aqua, 0 0 6px blue;
-		// opacity: .5;
+
 		text-transform: uppercase;
 		font-size: .7rem;
 		z-index: 10;
@@ -519,8 +497,6 @@ dialog {
 		left: 50%;
 		color: black;
 		transform: translateX(-50%);
-
-		// display: none;
 	}
 }
 
@@ -560,9 +536,6 @@ dialog {
 
 
 			transition: background-size .5s;
-
-			// background-color: tomato !important;
-
 
 
 			&::after {
@@ -655,17 +628,15 @@ dialog {
 		inset 0px 0px 5px 2px rgba(dodgerblue, .3),
 		inset 0px 0px 30px rgba(darkblue, .3),
 		0px 0px 10px 2px rgba(dodgerblue, .3),
-		0px 0px 40px rgba(darkblue, .3),
-					// 0px 0px 50px 30px transparent
-					;
+		0px 0px 40px rgba(darkblue, .3)
+		;
 	}
 	50% {
 		box-shadow:
 					inset 0px 0px 5px 2px rgba(dodgerblue, .7),
 					inset 0px 0px 30px rgba(darkblue, .7),
 					0px 0px 10px 2px rgba(dodgerblue, .7),
-					0px 0px 40px rgba(darkblue, .7),
-					// 0px 0px 50px darkblue
+					0px 0px 40px rgba(darkblue, .7)
 					;
 	}
 }
