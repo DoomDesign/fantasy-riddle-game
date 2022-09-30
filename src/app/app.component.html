@@ -1,6 +1,6 @@
 <div class="game-controller" [hidden]="gameState === 1">
 	<button type="button" [disabled]="gameState === 1" class="button_reset" (click)="resetGame()">RESET</button>
-	<button type="button" [disabled]="gameState === 1" class="button_reset" (click)="showRulesModal()">RULES</button>
+	<button type="button" [disabled]="gameState === 1" class="button_reset" (click)="showRulesModal()">REGELN</button>
 	<button type="button" class="button_toggleMute" (click)="toggleMute()">
 		<svg *ngIf="!audioMuted" xmlns="http://www.w3.org/2000/svg" version="1.0"  width="500" height="500" viewBox="0 0 75 75">
 			<path class="stroke fill" d="M39.389,13.769 L22.235,28.606 L6,28.606 L6,47.699 L21.989,47.699 L39.389,62.75 L39.389,13.769z"
@@ -16,6 +16,11 @@
 </div>
 
 <dialog #rulesmodal>
+	<h2>Spielweise</h2>
+	<p>Tausche jeweils immer eine Position auf dem Innenkreis mit einer auf den äußeren Kreisen. Klickst du eine Position an, werden die möglichen Tauschoptionen dunkelblau markiert.</p>
+	<p>Der Innenkreis lässt sich durch die Schaltflächen in der Mitte mit oder gegen den Uhrzeigersinn drehen.</p>
+	<p>Wenn Züge nicht erlaubt sind (entsprechend der Regeln unten), werden die regelverletzenden Positionen rot hervorgehoben.</p>
+
 	<h2>Regeln</h2>
 	<ol>
 		<li>Ork und Drache bewachen den Ausgang und müssen bekämpft werden.</li>
